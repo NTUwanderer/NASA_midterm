@@ -1,0 +1,4 @@
+Example of adding vlan interface:
+sudo ip link add link eth0 name eth0_2 type vlan id 2
+sudo dhclient eth0_2 -v
+sudo route add default gw 192.168.2.100
