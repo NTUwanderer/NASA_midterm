@@ -1,0 +1,25 @@
+mdadm --create --auto=yes /dev/md0 --raid-devices=2 --level=1 --chunk=4 /dev/sdb /dev/sdc
+
+# check md0 state
+mkfs -t ext4 /dev/md0
+mdadm --detail /dev/md0
+
+# Mount
+sudo mkdir /mnt/raid
+sudo mount -t ext4 /dev/md0 /mnt/raid
+
+# Check
+df -h
+
+# Moute at startup
+sudo fdisk /dev/md0
+O
+N
+P
+1
+W
+
+sudo mkfs.ext4 /dev/md0
+# Add following line to /etc/fstab
+# device    mountpoint     filesystem  options     dump  fskt
+/dev/md0   /mnt/raid       ext4        defaults    0     1
